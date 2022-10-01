@@ -1,35 +1,28 @@
 @import "./base.css";
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
   font-weight: normal;
 }
 
-a,
-.green {
+a {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
 }
 
-@media (hover: hover) {
+svg {
+  color: var(--gh4-gray-3);
+  cursor: pointer;
+}
+
+.image-round-full {
+  border-radius: 50%;
+  object-fit: cover;
+  overflow: hidden;
+  background-color: white;
+}
+
+/* @media (hover: hover) {
   a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+    color: var(--gh4-blue);
+    text-decoration: under;
   }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-}
+} */
