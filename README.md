@@ -1,6 +1,42 @@
-# github4m
+# GitHub for me (github4m)
 
-This template should help get you started developing with Vue 3 in Vite.
+## Side note
+
+The question is always "Why GitHub?". I am yet to see a project built with primarily black and white and looks awesome. It is robust too.
+
+## Overview
+
+This is a clone of [Github](https://github.com). I have earlier done this before but here is a combine effort of all my previous try which some were over 2 years ago. For your reference, kindly check out:
+
+- [Githook](https://github.com/MubarakSULAYMAN/gitook) - Primarily has user search functionality with some query filter functions.
+
+- [Githubb](https://github.com/MubarakSULAYMAN/githubb) - Optimize the full potentials of GitHub GraphQL API
+- [Github](https://github.com/MubarakSULAYMAN/github) - A clone of Github home page
+
+## Table of contents
+
+- [Project Title](#github-for-me-(github4m))
+<!-- - [Demo-Preview](#demo-preview) -->
+- [Table of contents](#table-of-contents)
+
+- [Getting started](#getting-started)
+
+- [Prerequisites](#prerequisites)
+
+- [Project setup](#project-setup)
+
+## Framework & Libraries
+
+- [Vue 3](https://vuejs.org/) - Rendering of the UI and Reactivity system
+  - [vue-router v4](https://router.vuejs.org/) - Vue routing system
+  - [Composition API](https://vuejs.org/api/composition-api-setup.html) - A set of APIs that allows imported functions instead of declaring options
+- [Pinia](https://pinia.vuejs.org/) - Vue 3 official store
+- [Vite](https://vitejs.dev/) - A super fast server
+- [Vue Apollo](https://v4.apollo.vuejs.org/) - Add GraphQL in your Vue.js apps with Apollo.js
+- [Typescript](https://www.typescriptlang.org/) - Strongly typed programming language to add types syntax to your JavaScript
+- [Day.js](https://day.js.org/) - A fast 2kB javascript date utility library
+<!-- - [vue-meta](https://vue-meta.nuxtjs.org/) - A HTML Metadata manager for Vue.js -->
+- [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) - A JavaScript style guide
 
 ## Recommended IDE Setup
 
@@ -44,3 +80,23 @@ npm run build
 ```sh
 npm run lint
 ```
+
+## Performance & Optimization
+
+In no way have I tested the performance. I only optimize if needed.
+
+## Authors
+
+- **Mubarak SULAYMAN** - [@mubaraksulayman](https://twitter.com/mubaraksulayman)
+
+See also the list of [contributors](https://github.com/MubarakSULAYMAN/little-url/contributors) who participated in this project.
+
+[(Back to top)](#github-for-me-(github4m))
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. :bow:
+
+Kindly contact me on :email: **mubaracksulaymann@gmail.com**. You can review **[my resume here](https://resume.io/r/UcJYNilaD)**. :nerd_face:. Thank you
+
+[(Back to top)](#github-for-me-(github4m))
