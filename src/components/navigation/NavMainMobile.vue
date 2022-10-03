@@ -86,9 +86,7 @@ function getUser(userLogin: string) {
   if (route.name === 'search-result') {
     storeSearch.fetchUser(userLogin);
     router.replace(`/search?q=${userLogin}&type=users`);
-    // storeSearch.fetchUser(userLogin);
-    // router.push(`/search?${userLogin}&type=users`);
-  } else router.push(`/search?${userLogin}&type=users`);
+  } else router.push(`/search?q=${userLogin}&type=users`);
 }
 </script>
 
