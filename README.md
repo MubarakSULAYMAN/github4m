@@ -38,6 +38,14 @@ This is a clone of [Github](https://github.com). I have earlier done this before
 <!-- - [vue-meta](https://vue-meta.nuxtjs.org/) - A HTML Metadata manager for Vue.js -->
 - [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) - A JavaScript style guide
 
+# What it does
+
+A clone of GitHub search that features user and repository search. Use the search input to search for a keyword and select a user from the result to view their repositories.
+
+## Performance & Optimization
+
+In no way have I tested the performance. I only optimize if needed.
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
@@ -80,10 +88,6 @@ npm run build
 ```sh
 npm run lint
 ```
-
-## Performance & Optimization
-
-In no way have I tested the performance. I only optimize if needed.
 
 ## Authors
 
