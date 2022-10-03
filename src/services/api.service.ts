@@ -8,8 +8,7 @@ type Headers = {
 const getHeaders = () => {
   //   const headers = {};
   const headers: Headers = {};
-  //   const myToken = import.meta.env.VITE_APP_API_KEY;
-  const myToken = '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';
+  const myToken = import.meta.env.VITE_API_KEY;
 
   if (myToken) {
     headers.authorization = `Bearer ${myToken}`;

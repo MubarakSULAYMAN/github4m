@@ -102,11 +102,9 @@ function getUser(userLogin: string) {
 }
 
 const username = computed(() => route.params.username);
-// const currentUser = store.currentUser
 
 function fetchUserProfile(userLogin: string) {
   const { variables, load, onResult, onError } = getUserProfile();
-  console.log('userLogin');
   variables.value = {
     username: userLogin,
   };

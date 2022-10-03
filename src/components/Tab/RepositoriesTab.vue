@@ -33,7 +33,6 @@ const repositories = ref<RepositorySummary | undefined>(undefined);
 
 function fetchUserProfile(userLogin: string) {
   const { variables, load, onResult, onError } = getRepos();
-  console.log('userLogin');
   variables.value = {
     username: userLogin,
   };
@@ -55,7 +54,6 @@ function fetchUserProfile(userLogin: string) {
 }
 
 fetchUserProfile(String(username.value) || 'MubarakSULAYMAN');
-console.log(username.value);
 </script>
 
 <style scoped>
