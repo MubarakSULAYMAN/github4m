@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav class="mobile-nav">
     <input
       type="text"
       name="user-search"
@@ -7,11 +7,12 @@
       class="search-input"
       placeholder="Search"
       v-model="searchTerm"
+      @keydown.enter="getUser(searchTerm)"
     />
 
     <RouterLink to="" v-for="menu in mobileNavMenu" :key="menu.name">{{ menu.name }}</RouterLink>
     <RouterLink to="" class="user-image">
-      <img src="" alt="" class="image-round-full" />
+      <img :src="userProfile?.avatarUrl" :alt="userProfile?.name" class="image-round-full" />
       <span>{{ username }}</span>
     </RouterLink>
     <RouterLink to="" class="signout">
@@ -22,11 +23,12 @@
 </template>
 
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
-import { reactive, ref } from 'vue';
-import type { NavMenu } from '@/types/index';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
+import { computed, reactive } from 'vue';
+import type { NavMenu } from '@/types';
 import IconSignOut from '@/components/icons/IconSignOut.vue';
 import { useSharedStore } from '@/stores/shared';
+import { useUserSearchStore } from '@/stores/user.search';
 
 interface Props {
   username: string;
@@ -42,8 +44,12 @@ defineEmits<{
   (e: 'click'): void;
 }>();
 
-const store = useSharedStore()
+const store = useSharedStore();
+const router = useRouter();
+const route = useRoute();
+const storeSearch = useUserSearchStore();
 const searchTerm = store.searchTerm;
+const userProfile = computed(() => store.currentUser?.user);
 
 const mobileNavMenu = reactive<NavMenu[]>([
   {
@@ -75,11 +81,20 @@ const mobileNavMenu = reactive<NavMenu[]>([
     route: '',
   },
 ]);
+
+function getUser(userLogin: string) {
+  if (route.name === 'search-result') {
+    storeSearch.fetchUser(userLogin);
+    router.replace(`/search?q=${userLogin}&type=users`);
+    // storeSearch.fetchUser(userLogin);
+    // router.push(`/search?${userLogin}&type=users`);
+  } else router.push(`/search?${userLogin}&type=users`);
+}
 </script>
 
 <style scoped>
 nav {
-  display: flex;
+  display: none;
   flex-direction: column;
   padding: 16px;
 }
@@ -89,6 +104,7 @@ nav {
   margin-top: 4px;
   margin-bottom: 12px;
   padding: 6px 12px;
+  color: var(--vt-c-white);
   font-size: 14px;
   border: 1px solid var(--vt-c-divider-dark-1);
   border-radius: 6px;
@@ -96,6 +112,7 @@ nav {
 }
 
 .search-input:focus {
+  color: var(--vt-c-black);
   background-color: var(--vt-c-white);
   transition: color 0.5s, background-color 0.5s;
 }
@@ -107,7 +124,8 @@ nav a {
 }
 
 nav a,
-nav a span {
+nav a span,
+nav a svg {
   color: var(--vt-c-white);
   font-weight: 600;
 }
@@ -131,6 +149,12 @@ nav a span {
 .user-image > :first-child,
 .signout > :first-child {
   margin-right: 4px;
+}
+
+@media only screen and (max-width: 425px) {
+  nav {
+    display: flex;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

@@ -3,14 +3,18 @@
     <div class="wrapper">
       <div class="repo-summary">
         <div class="title">
-          <RouterLink to="" class="name">nft-gallery</RouterLink>
-          <RouterLink to="" class="name user-name">nft-gallery</RouterLink>
+          <RouterLink :to="`/${userInfo?.login}/?tab=repositories`" class="name">{{
+            userInfo?.name
+          }}</RouterLink>
+          <RouterLink :to="`/${userInfo?.login}/?tab=repositories`" class="name user-name">
+            {{ userInfo?.login }}
+          </RouterLink>
         </div>
 
-        <p class="description">NFT Explorer world_map compass running on Kusama and Polkadot</p>
+        <p class="description" v-text="userInfo?.bio" />
         <p class="other-info">
-          <span>Location</span>
-          <a href="mailto:">email</a>
+          <span v-text="userInfo?.location" />
+          <a href="mailto:" v-text="userInfo?.email" />
         </p>
       </div>
 
@@ -24,12 +28,22 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 import ItemGroup from '@/components/card/ItemGroup.vue';
+import type { UserInfo } from '@/types';
+
+interface Props {
+  userInfo: UserInfo;
+}
+
+withDefaults(defineProps<Props>(), {
+  userInfo: undefined,
+});
 </script>
 
 <style scoped>
 .wrapper,
 .title {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .title,
@@ -46,12 +60,17 @@ import ItemGroup from '@/components/card/ItemGroup.vue';
   justify-content: space-between;
 }
 
+.repo-summary {
+  width: calc(100% - 100px);
+}
+
 .other-info {
   display: flex;
 }
 
-.other-info > :not(:first-child) {
-  margin-left: 12px;
+.other-info > :not(:last-child),
+.title a.name:first-child {
+  margin-right: 12px;
 }
 
 .other-info a:hover {
@@ -75,7 +94,6 @@ button span {
 }
 
 .title a.user-name {
-  margin-left: 12px;
   font-weight: normal;
 }
 

@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
-import type { NavMenu } from '@/types/index';
+import type { NavMenu } from '@/types';
 import { ref } from 'vue';
 import IconGithub from '@/components/icons/IconGithub.vue';
 
@@ -40,9 +40,7 @@ const footerRoutes = ref<NavMenu[]>([
 <style scoped>
 nav {
   display: grid;
-  /* grid-template-columns: 250px 1fr; */
   grid-template-columns: fit-content(250px) 1fr;
-  /* minmax(100px, 500px) */
   padding: 40px 0;
   border-top: 1px solid var(--color-border-hover);
 }
@@ -102,16 +100,8 @@ nav {
   nav {
     display: grid;
     grid-template-columns: 1fr;
-    /* justify-content: space-evenly; */
     justify-items: center;
-    /* align-content: space-evenly; */
     align-items: center;
-  }
-
-  nav a span,
-  a span {
-    /* vertical-align: middle; */
-    background-color: red !important;
   }
 
   .copyright {
@@ -128,5 +118,17 @@ nav {
 }
 
 @media only screen and (max-width: 767px) {
+  .footer-navigation a {
+    margin: 0 10px;
+  }
+}
+
+@media only screen and (max-width: 635px) {
+  .footer-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
 }
 </style>

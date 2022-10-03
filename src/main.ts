@@ -6,26 +6,33 @@ import router from './router';
 
 import './assets/main.css';
 
-import { DefaultApolloClient } from '@vue/apollo-composable';
-import { ApolloClient, InMemoryCache } from '@apollo/client/core';
-
-const cache = new InMemoryCache();
-
-const apolloClient = new ApolloClient({
-  cache,
-  //   uri: "https://rickandmortyapi.com/graphql",
-  uri: import.meta.env.VITE_API_URL,
-});
+import { DefaultApolloClient, provideApolloClient } from '@vue/apollo-composable';
+import { apolloClient } from '@/services/api.service';
+// import dayjs from 'dayjs';
+// import relativeTime from 'dayjs/plugin/relativeTime';
+// dayjs.extend(relativeTime);
 
 const app = createApp({
   setup() {
     provide(DefaultApolloClient, apolloClient);
+    // provide('Dayjs', dayjs);
+    // inject('Dayjs');
   },
 
   render: () => h(App),
 });
 
+provideApolloClient(apolloClient);
+
 app.use(createPinia());
 app.use(router);
+// app.config.globalProperties.$dayjs = dayjs;
+// app.directive('dayjs', {
+//   /* custom directive hooks */
+// });
 
 app.mount('#app');
+
+// router.isReady().then(() => {
+//   app.mount('#app');
+// });

@@ -3,7 +3,7 @@
     <nav>
       <IconHamburgerMenu class="hamburger-menu" @click="toggleMobileNav" />
       <div class="nav-left">
-        <RouterLink to="" class="icon-github">
+        <RouterLink to="/" class="icon-github">
           <IconGithub />
         </RouterLink>
 
@@ -14,6 +14,7 @@
             id="user-search"
             placeholder="Search or jump to..."
             v-model="searchTerm"
+            @keydown.enter="getUser(searchTerm)"
             @focus="onFocus = true"
             @blur="onFocus = false"
           />
@@ -34,31 +35,40 @@
         </span>
 
         <span class="user-image">
-          <img src="" alt="" class="image-round-full" />
+          <img :src="userProfile?.avatarUrl" :alt="userProfile?.name" class="image-round-full" />
           <IconCaretDown />
         </span>
       </div>
     </nav>
 
-    <NavMainMobile v-if="showMobileNav" />
+    <NavMainMobile class="mobile-nav" v-if="showMobileNav" />
   </header>
 </template>
 
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
-import { reactive, ref } from 'vue';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
+import { computed, reactive, ref, watch } from 'vue';
 import IconGithub from '@/components/icons/IconGithub.vue';
 import IconHamburgerMenu from '@/components/icons/IconHamburgerMenu.vue';
 import IconBell from '@/components/icons/IconBell.vue';
 import IconPlus from '@/components/icons/IconPlus.vue';
 import IconCaretDown from '@/components/icons/IconCaretDown.vue';
-import type { NavMenu } from '@/types/index';
+import type { NavMenu } from '@/types';
 import NavMainMobile from '@/components/navigation/NavMainMobile.vue';
 import { useSharedStore } from '@/stores/shared';
+import { useUserSearchStore } from '@/stores/user.search';
+import { getUserProfile } from '@/composables/useUserProfile';
+// import { getUsers } from '@/composables/useUserFetch';
+import type { UserProfileSummary } from '@/types';
 
 const store = useSharedStore();
+const router = useRouter();
+const route = useRoute();
+const storeSearch = useUserSearchStore();
 const searchTerm = store.searchTerm;
 const onFocus = ref<boolean>(false);
+
+const userProfile = computed(() => store.currentUser?.user);
 
 const topNavMenu = reactive<NavMenu[]>([
   {
@@ -82,6 +92,48 @@ const topNavMenu = reactive<NavMenu[]>([
 const showMobileNav = ref<boolean>(false);
 
 const toggleMobileNav = () => (showMobileNav.value = !showMobileNav.value);
+
+function getUser(userLogin: string) {
+  onFocus.value = false;
+  if (route.name === 'search-result') {
+    storeSearch.fetchUser(userLogin);
+    router.replace(`/search?q=${userLogin}&type=users`);
+  } else router.push(`/search?q=${userLogin}&type=users`);
+}
+
+const username = computed(() => route.params.username);
+// const currentUser = store.currentUser
+
+function fetchUserProfile(userLogin: string) {
+  const { variables, load, onResult, onError } = getUserProfile();
+  console.log('userLogin');
+  variables.value = {
+    username: userLogin,
+  };
+  load();
+  store.loading();
+
+  onResult((queryResult: { data: UserProfileSummary }) => {
+    store.done();
+    store.currentUser = queryResult.data;
+
+    // console.log('queryResult.networkStatus: ', queryResult.networkStatus);
+    // console.log(queryResult.stale);
+  });
+
+  onError((error) => {
+    console.log('error.graphQLErrors: ', error.graphQLErrors);
+    console.log('error.networkError: ', error.networkError);
+  });
+}
+
+watch(
+  () => route.fullPath,
+  () => fetchUserProfile(String(username.value) || 'MubarakSULAYMAN'),
+  { deep: true }
+);
+
+// fetchUserProfile(String(username.value) || 'MubarakSULAYMAN');
 </script>
 
 <style scoped>
@@ -94,7 +146,8 @@ header nav {
   background-color: var(--vt-c-black);
 }
 
-.hamburger-menu {
+.hamburger-menu,
+.mobile-nav {
   display: none;
 }
 
@@ -139,10 +192,6 @@ nav .icon-plus:hover {
   width: 24px;
   height: 24px;
   margin-right: 4px;
-  /* border-radius: 50%;
-  object-fit: cover;
-  overflow: hidden;
-  background-color: white; */
 }
 
 .search-wrapper {
@@ -159,6 +208,7 @@ nav .icon-plus:hover {
 .search-wrapper input {
   width: 100%;
   padding: 6px 12px;
+  color: var(--vt-c-white);
   font-size: 14px;
   border: 1px solid var(--vt-c-divider-dark-1);
   border-radius: 6px;
@@ -166,6 +216,7 @@ nav .icon-plus:hover {
 }
 
 .search-wrapper input:focus {
+  color: var(--vt-c-black);
   border-radius: 6px 6px 0 0;
   background-color: var(--vt-c-white);
 }
@@ -234,6 +285,11 @@ nav .icon-plus:hover {
 
   .hamburger-menu {
     display: inline-block;
+    color: var(--vt-c-white) !important;
+  }
+
+  .mobile-nav {
+    display: flex;
   }
 }
 

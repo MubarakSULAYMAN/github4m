@@ -3,48 +3,110 @@
     <div class="wrapper">
       <div class="repo-summary">
         <div class="title">
-          <RouterLink to="" class="name">nft-gallery</RouterLink>
-          <span class="category">Public</span>
+          <a
+            :href="repo.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="name"
+            v-text="repo.name"
+          />
+          <span class="category" v-if="!repo.isPrivate">Public</span>
         </div>
 
-        <p class="repo-origin">Forked from kodadot/nft-gallery</p>
-        <p class="description">NFT Explorer world_map compass running on Kusama and Polkadot</p>
+        <p class="repo-origin" v-if="repo.parent">
+          Forked from
+          <a
+            :href="repo.parent.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            v-text="repo.parent.name"
+          />
+        </p>
+        <p class="description" v-html="repo.descriptionHTML" />
       </div>
 
       <button>
         <IconStar />
-        <span>Star</span>
+        <span>{{ repo.stargazerCount }}</span>
       </button>
     </div>
 
-    <div class="repo-topics">
-      <span class="topic" :title="`Topic: `" v-for="x in 12" :key="x">Topic</span>
+    <div class="repo-topics" v-if="topics">
+      <a
+        :href="topic.url"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="topic"
+        :title="`Topic: ${topic.topic.name}`"
+        v-for="topic in topics"
+        :key="topic.topic.name"
+        v-text="topic.topic.name"
+      />
     </div>
 
     <div class="repo-tips">
-      <div class="language-info">
-        <span class="dot"></span>
-        <span class="language">HTML</span>
+      <div class="language-info" v-if="repo.primaryLanguage">
+        <span class="dot" :style="{ backgroundColor: repo.primaryLanguage.color }" />
+        <span class="language" v-text="repo.primaryLanguage.name" />
       </div>
-      <RouterLink to="" class="fork-info">
+
+      <RouterLink to="" class="fork-info" v-if="repo.forkCount">
         <IconBranch />
-        <span to="" class="fork-count">84</span>
+        <span to="" class="fork-count" v-text="repo.forkCount" />
       </RouterLink>
-      <div class="license-info">
+
+      <div class="license-info" v-if="repo.licenseInfo">
         <IconScale />
-        <span class="license-name">MIT License</span>
+        <span class="license-name" v-text="repo.licenseInfo.name" />
       </div>
-      <div class="relative-date">Updated on 25 Jul 2021</div>
+
+      <div class="relative-date">Updated on {{ customDate(repo.updatedAt) }}</div>
     </div>
   </ItemGroup>
 </template>
 
 <script setup lang="ts">
-import { RouterLink, useRoute } from 'vue-router';
+import { RouterLink } from 'vue-router';
 import ItemGroup from '@/components/card/ItemGroup.vue';
 import IconStar from '@/components/icons/IconStar.vue';
 import IconBranch from '@/components/icons/IconBranch.vue';
 import IconScale from '@/components/icons/IconScale.vue';
+import type { Repository } from '@/types';
+import { computed } from 'vue';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
+// import type { CSSProperties } from 'vue';
+
+interface Props {
+  repositoryInfo: Repository;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  repositoryInfo: undefined,
+});
+
+const repo = computed(() => props.repositoryInfo.node);
+const topics = computed(() => repo.value.repositoryTopics.nodes);
+// const dotStyle = computed(
+//   () => ({ backgroundColor: repo.value.primaryLanguage.color } as unknown as CSSProperties)
+// );
+
+function customDate(date: string) {
+  if (!date) {
+    return null;
+  }
+  if (dayjs(date).fromNow().includes('year')) {
+    return `on ${dayjs(date).format('D MMM YYYY')}`;
+  }
+  const fromNowMonth = dayjs(date).fromNow().includes('month');
+  const currentYear = new Date().getFullYear();
+  const isThisYear = parseInt(String(date).slice(0, 4), 10) === currentYear;
+  if (fromNowMonth && isThisYear) {
+    return `on ${dayjs(date).format('D MMM')}`;
+  }
+  return dayjs(date).fromNow();
+}
 </script>
 
 <style scoped>
@@ -55,8 +117,6 @@ import IconScale from '@/components/icons/IconScale.vue';
 .repo-tips [class$='-info'] {
   display: flex;
 }
-
-/* .repo-summary {} */
 
 .title,
 .repo-tips,
@@ -74,6 +134,8 @@ import IconScale from '@/components/icons/IconScale.vue';
 
 .title,
 .repo-origin,
+.repo-origin a,
+.description :deep(a),
 .description,
 button span {
   color: var(--gh4-gray-3);
@@ -90,7 +152,6 @@ button span {
 }
 
 .title .category {
-  /* display: inline-block; */
   margin-left: 12px;
   padding: 0 8px;
   border: 1px solid var(--color-border-hover);
@@ -115,12 +176,10 @@ button span {
 .repo-topics .topic {
   padding: 1px 8px;
   color: var(--gh4-blue);
-  /* font-size: 12px; */
   border-radius: 10px;
   background-color: var(--gh4-blue-light);
 }
 
-/* .repo-topics .topic:not(:first-child) { */
 .repo-topics .topic {
   margin-left: 2px;
   margin-bottom: 2px;
@@ -138,8 +197,6 @@ button {
   justify-content: start;
   width: 100px;
   height: 30px;
-  /* margin: 12px 0; */
-  /* padding: 8px; */
   padding: 0 12px;
   border: 1px solid var(--color-border-hover);
   border-radius: 4px;
@@ -155,15 +212,15 @@ button:hover {
 }
 
 .repo-tips {
-  /* margin-top: 8px; */
   color: var(--gh4-gray-3);
   font-size: 12px;
 }
+
 .repo-tips [class$='-info']:not(:first-child),
 .repo-tips .relative-date {
   margin-left: 12px;
 }
-/* .language-info */
+
 .dot {
   display: inline-block;
   width: 12px;
@@ -176,13 +233,12 @@ button:hover {
   color: var(--color-text);
 }
 
+.repo-origin a:hover,
+.description :deep(a):hover,
 .fork-info:hover svg,
 .fork-info:hover span {
   color: var(--gh4-blue);
 }
-
-/* .license-info */
-/* .relative-date */
 
 .language,
 .fork-count,

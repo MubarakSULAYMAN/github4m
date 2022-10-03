@@ -1,5 +1,3 @@
 <template>
-    <nav>
-        dropdown
-    </nav>
+  <nav>dropdown</nav>
 </template>

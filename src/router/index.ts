@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import HomeView from '@/views/HomeView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,26 +15,8 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
+      component: () => import('@/views/AboutView.vue'),
     },
-    // {
-    //   path: '/collections',
-    //   name: 'collections',
-    //   component: RouteEntry,
-    //   children: [
-    //     {
-    //       path: '',
-    //       name: 'collections.index',
-    //       // redirect: { name: 'collections.type' },
-    //       redirect: { path: 'collections/spectacles-women' },
-    //     },
-    //     {
-    //       path: '/collections/:slug',
-    //       name: 'collections.type',
-    //       component: () => import('@/views/pages/collections-home.vue'),
-    //     },
-    //   ],
-    // },
     {
       path: '/search',
       name: 'search-result',

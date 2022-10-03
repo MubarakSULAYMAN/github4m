@@ -1,4 +1,4 @@
-@import "./base.css";
+@import './base.css';
 
 #app {
   font-weight: normal;
@@ -11,6 +11,11 @@ a {
 svg {
   color: var(--gh4-gray-3);
   cursor: pointer;
+}
+
+img {
+  text-align: center;
+  vertical-align: middle;
 }
 
 .image-round-full {

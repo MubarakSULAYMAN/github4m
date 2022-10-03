@@ -2,20 +2,25 @@
   <nav>
     <span class="empty-space">
       <div class="user-details" v-if="showItem">
-        <img src="" alt="" class="image-round-full" />
-        <div class="username">MubarakSULAYMAN</div>
+        <img :src="userProfile?.avatarUrl" :alt="userProfile?.name" class="image-round-full" />
+        <div class="username" v-texxt="userProfile?.login" />
       </div>
     </span>
 
     <div class="tabs">
       <RouterLink
-        :to="tab.name"
-        v-for="tab in tabs"
+        :to="tab.route"
+        v-for="tab in navTabs"
         :key="tab.name"
-        :class="{ 'route-active': routeQuery.tab === tab.name.toLowerCase() }"
+        :class="{
+          'route-active':
+            activeTab === tab.name.toLowerCase() ||
+            (!navTabs.some((tab) => tab.name.toLocaleLowerCase() === activeTab) &&
+              tab.name === 'Overview'),
+        }"
       >
         <span class="item-group">
-          <component :is="tab.icon"></component>
+          <component :is="tab.icon" />
           <span class="route-name">{{ tab.name }}</span>
           <span class="repo-count" v-if="tab.name === 'Repositories' && repoCount > 0">
             {{ repoCount }}
@@ -25,56 +30,57 @@
           </span>
         </span>
       </RouterLink>
-      <!-- <div>{{ route }}</div> -->
-      <!-- <div>username:{{ !!routeParams.username }}</div> -->
-      <!-- <div>query:{{ routeQuery.tab }}</div> -->
     </div>
   </nav>
 </template>
 
 <script setup lang="ts">
 import { RouterLink, useRoute } from 'vue-router';
-import { ref, reactive, onBeforeUnmount } from 'vue';
-import type { NavMenu } from '@/types/index';
+import { ref, reactive, onBeforeUnmount, computed } from 'vue';
+import type { NavMenu } from '@/types';
 import IconBookOpen from '@/components/icons/IconBookOpen.vue';
 import IconBookClose from '@/components/icons/IconBookClose.vue';
 import IconTable from '@/components/icons/IconTable.vue';
 import IconBox from '@/components/icons/IconBox.vue';
 import IconStar from '@/components/icons/IconStar.vue';
+import { useSharedStore } from '@/stores/shared';
 
-type Tabs = NavMenu & {
+type NavTabs = NavMenu & {
   icon: string;
 };
 
 const route = useRoute();
-const routeQuery = reactive(route.query);
-const currentUser = ref<string>('');
-const repoCount = ref<number>(10);
-const starCount = ref<number>(20);
-const tabs = reactive<Tabs[]>([
+const store = useSharedStore();
+const username = computed(() => route.params.username);
+const userProfile = computed(() => store.currentUser?.user);
+const activeTab = computed(() => route.query.tab);
+const repoCount = computed(() => userProfile.value?.repositories?.totalCount || 0);
+const starCount = computed(() => userProfile.value?.starredRepositories?.totalCount || 0);
+
+const navTabs = reactive<NavTabs[]>([
   {
     name: 'Overview',
-    route: `/${currentUser.value}`,
+    route: `/${username.value || 'MubarakSULAYMAN'}`,
     icon: IconBookOpen,
   },
   {
     name: 'Repositories',
-    route: `/${currentUser.value}?tab=repositories`,
+    route: `/${username.value || 'MubarakSULAYMAN'}?tab=repositories`,
     icon: IconBookClose,
   },
   {
     name: 'Projects',
-    route: `/${currentUser.value}?tab=projects`,
+    route: `/${username.value || 'MubarakSULAYMAN'}?tab=projects`,
     icon: IconTable,
   },
   {
     name: 'Packages',
-    route: `/${currentUser.value}?tab=packages`,
+    route: `/${username.value || 'MubarakSULAYMAN'}?tab=packages`,
     icon: IconBox,
   },
   {
     name: 'Stars',
-    route: `/${currentUser.value}?tab=stars`,
+    route: `/${username.value || 'MubarakSULAYMAN'}?tab=stars`,
     icon: IconStar,
   },
 ]);
@@ -100,18 +106,14 @@ nav {
   position: -webkit-sticky;
   top: 0;
   display: flex;
-  /* display: none; */
   padding-top: 20px;
   border-bottom: 1px solid var(--color-border-hover);
   background-color: var(--color-background);
   z-index: 1;
-  /* border: 1px solid var(--vt-c-divider-dark-1); */
-  /* overflow-x: auto; */
 }
 
 .empty-space {
   display: inline-block;
-  /* width: 300px; */
   width: calc((2 / 7) * 100%);
 }
 
@@ -134,14 +136,10 @@ nav {
 
 .tabs {
   display: flex;
-  /* padding: 0 8px; */
 }
 
 a {
   padding: 8px 0;
-  /* font-size: 12px; */
-  /* line-height: 1.5; */
-  /* border: 1px solid green; */
 }
 
 nav a:first-child {
@@ -156,9 +154,7 @@ a .item-group {
   display: flex;
   align-items: center;
   padding: 2px 8px;
-  /* border: 1px solid blue; */
   border-radius: 4px;
-  /* color: var(--vt-c-text-dark-2); */
   color: var(--color-text);
 }
 
