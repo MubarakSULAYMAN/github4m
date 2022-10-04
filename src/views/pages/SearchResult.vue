@@ -68,7 +68,14 @@ const users = computed(() =>
 
 function getUser(userLogin: string) {
   storeSearch.fetchUser(userLogin);
-  router.replace(`/search?q=${userLogin}&type=users`);
+
+  router.replace({
+    name: 'search-result',
+    query: {
+      q: store.searchTerm,
+      type: 'users',
+    },
+  });
 }
 
 if (username.value) {

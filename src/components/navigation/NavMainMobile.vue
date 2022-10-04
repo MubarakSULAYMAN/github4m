@@ -6,8 +6,8 @@
       id="useer-search"
       class="search-input"
       placeholder="Search"
-      v-model="searchTerm"
-      @keydown.enter="getUser(searchTerm)"
+      v-model="store.searchTerm"
+      @keydown.enter="getUser"
     />
 
     <RouterLink to="" v-for="menu in mobileNavMenu" :key="menu.name">{{ menu.name }}</RouterLink>
@@ -48,7 +48,6 @@ const store = useSharedStore();
 const router = useRouter();
 const route = useRoute();
 const storeSearch = useUserSearchStore();
-const searchTerm = store.searchTerm;
 const userProfile = computed(() => store.currentUser?.user);
 
 const mobileNavMenu = reactive<NavMenu[]>([
@@ -82,11 +81,24 @@ const mobileNavMenu = reactive<NavMenu[]>([
   },
 ]);
 
-function getUser(userLogin: string) {
+function getUser() {
   if (route.name === 'search-result') {
-    storeSearch.fetchUser(userLogin);
-    router.replace(`/search?q=${userLogin}&type=users`);
-  } else router.push(`/search?q=${userLogin}&type=users`);
+    storeSearch.fetchUser(store.searchTerm);
+    router.replace({
+      name: 'search-result',
+      query: {
+        q: store.searchTerm,
+        type: 'users',
+      },
+    });
+  } else
+    router.push({
+      name: 'search-result',
+      query: {
+        q: store.searchTerm,
+        type: 'users',
+      },
+    });
 }
 </script>
 

@@ -13,8 +13,8 @@
             name="user-search"
             id="user-search"
             placeholder="Search or jump to..."
-            v-model="searchTerm"
-            @keydown.enter="getUser(searchTerm)"
+            v-model="store.searchTerm"
+            @keydown.enter="getUser"
             @focus="onFocus = true"
             @blur="onFocus = false"
             ref="githubSearchInput"
@@ -65,8 +65,7 @@ const store = useSharedStore();
 const router = useRouter();
 const route = useRoute();
 const storeSearch = useUserSearchStore();
-const searchTerm = store.searchTerm;
-const githubSearchInput = ref(null)
+const githubSearchInput = ref<any>(null);
 const onFocus = ref<boolean>(false);
 
 const userProfile = computed(() => store.currentUser?.user);
@@ -94,13 +93,27 @@ const showMobileNav = ref<boolean>(false);
 
 const toggleMobileNav = () => (showMobileNav.value = !showMobileNav.value);
 
-function getUser(userLogin: string) {
-  githubSearchInput.value?.blur()
+function getUser() {
+  githubSearchInput.value?.blur();
   onFocus.value = false;
+
   if (route.name === 'search-result') {
-    storeSearch.fetchUser(userLogin);
-    router.replace(`/search?q=${userLogin}&type=users`);
-  } else router.push(`/search?q=${userLogin}&type=users`);
+    storeSearch.fetchUser(store.searchTerm);
+    router.replace({
+      name: 'search-result',
+      query: {
+        q: store.searchTerm,
+        type: 'users',
+      },
+    });
+  } else
+    router.push({
+      name: 'search-result',
+      query: {
+        q: store.searchTerm,
+        type: 'users',
+      },
+    });
 }
 
 const username = computed(() => route.params.username);
@@ -127,13 +140,13 @@ function fetchUserProfile(userLogin: string) {
   });
 }
 
+fetchUserProfile(String(username.value) || 'MubarakSULAYMAN');
+
 watch(
   () => route.fullPath,
   () => fetchUserProfile(String(username.value) || 'MubarakSULAYMAN'),
   { deep: true }
 );
-
-// fetchUserProfile(String(username.value) || 'MubarakSULAYMAN');
 </script>
 
 <style scoped>
