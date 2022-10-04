@@ -26,6 +26,7 @@ provideApolloClient(apolloClient);
 
 app.use(createPinia());
 app.use(router);
+
 // app.config.globalProperties.$dayjs = dayjs;
 // app.directive('dayjs', {
 //   /* custom directive hooks */

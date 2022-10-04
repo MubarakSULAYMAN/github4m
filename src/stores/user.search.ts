@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-// import { useSharedStore } from '@/stores/shared';
+import { useSharedStore } from '@/stores/shared';
 import type { UserInfo } from '@/types';
 import { getUsers } from '@/composables/useUserFetch';
 
@@ -20,8 +20,6 @@ type Store = {
   users: Users | null;
 };
 
-// const store = useSharedStore();
-
 export const useUserSearchStore = defineStore('search-user', {
   state: (): Store => ({
     users: null,
@@ -29,15 +27,16 @@ export const useUserSearchStore = defineStore('search-user', {
 
   actions: {
     fetchUser(userLogin: string) {
+      const store = useSharedStore();
       const { variables, load, onResult, onError } = getUsers();
       variables.value = {
         username: userLogin,
       };
       load();
-      // store.loading();
+      store.loading();
 
       onResult((queryResult: { data: Users }) => {
-        // store.done();
+        store.done();
         this.users = queryResult.data;
 
         // console.log('queryResult.networkStatus: ', queryResult.networkStatus);

@@ -7,7 +7,7 @@
       placeholder="Find a repository..."
     />
 
-    <p v-if="!store.isLoading && !!repositories?.edges">No repo found for this user.</p>
+    <p v-if="!store.isLoading && !repositories?.edges">No repo found for this user.</p>
 
     <RepoSummary
       v-else

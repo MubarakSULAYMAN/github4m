@@ -144,8 +144,7 @@ fetchUserProfile(String(username.value) || 'MubarakSULAYMAN');
 
 watch(
   () => route.fullPath,
-  () => fetchUserProfile(String(username.value) || 'MubarakSULAYMAN'),
-  { deep: true }
+  () => fetchUserProfile(String(username.value) || 'MubarakSULAYMAN')
 );
 </script>
 
