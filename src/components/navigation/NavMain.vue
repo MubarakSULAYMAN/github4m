@@ -17,6 +17,7 @@
             @keydown.enter="getUser(searchTerm)"
             @focus="onFocus = true"
             @blur="onFocus = false"
+            ref="githubSearchInput"
           />
           <div class="recent-search" v-show="onFocus">
             <div>Recent search and suggestions</div>
@@ -65,6 +66,7 @@ const router = useRouter();
 const route = useRoute();
 const storeSearch = useUserSearchStore();
 const searchTerm = store.searchTerm;
+const githubSearchInput = ref(null)
 const onFocus = ref<boolean>(false);
 
 const userProfile = computed(() => store.currentUser?.user);
@@ -93,6 +95,7 @@ const showMobileNav = ref<boolean>(false);
 const toggleMobileNav = () => (showMobileNav.value = !showMobileNav.value);
 
 function getUser(userLogin: string) {
+  githubSearchInput.value?.blur()
   onFocus.value = false;
   if (route.name === 'search-result') {
     storeSearch.fetchUser(userLogin);
