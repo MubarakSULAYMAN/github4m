@@ -4,14 +4,15 @@
       type="text"
       name="repository-search"
       id="repository-search"
-      placeholder="Find a repository..."
+      placeholder="Filter result"
+      title="Find a repository..."
+      v-model="searchTerm"
     />
-
     <p v-if="!store.isLoading && !repositories?.edges">No repo found for this user.</p>
 
     <RepoSummary
       v-else
-      v-for="repo in repositories?.edges"
+      v-for="repo in filteredResult"
       :key="repo.node?.description"
       :repository-info="repo"
     />
@@ -30,6 +31,12 @@ const route = useRoute();
 const store = useSharedStore();
 const username = computed(() => route.params.username);
 const repositories = ref<RepositorySummary | undefined>(undefined);
+const searchTerm = ref<string>('');
+const filteredResult = computed(() =>
+  repositories.value?.edges.filter((repo) =>
+    repo.node.name.toLowerCase().includes(searchTerm.value.toLowerCase())
+  )
+);
 
 function fetchUserProfile(userLogin: string) {
   const { variables, load, onResult, onError } = getRepos();
