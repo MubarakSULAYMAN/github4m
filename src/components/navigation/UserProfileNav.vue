@@ -100,6 +100,7 @@ section {
 
 .user-summary {
   position: relative;
+  width: fit-content;
   margin-top: -40px;
 }
 
