@@ -15,7 +15,7 @@ This is a clone of [Github](https://github.com). I have earlier done this before
 
 ## Table of contents
 
-- [Project Title](#github-for-me-(github4m))
+- [Project Title](#github-for-me-(-github4m-))
 <!-- - [Demo-Preview](#demo-preview) -->
 - [Table of contents](#table-of-contents)
 
@@ -95,12 +95,12 @@ npm run lint
 
 See also the list of [contributors](https://github.com/MubarakSULAYMAN/little-url/contributors) who participated in this project.
 
-[(Back to top)](#github-for-me-(github4m))
+[(Back to top)](#github-for-me-(-github4m-))
 
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. :bow:
 
-Kindly contact me on :email: **mubaracksulaymann@gmail.com**. You can review **[my resume here](https://resume.io/r/UcJYNilaD)**. :nerd_face:. Thank you
+Kindly contact me on :email: **mubaracksulaymann@gmail.com**. You can review **[my resume here](https://t.co/CBsfpckBsr)**. :nerd_face:. Thank you
 
-[(Back to top)](#github-for-me-(github4m))
+[(Back to top)](#github-for-me-(-github4m-))

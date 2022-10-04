@@ -6,7 +6,6 @@ type Headers = {
 
 //  Set header
 const getHeaders = () => {
-  //   const headers = {};
   const headers: Headers = {};
   const myToken = import.meta.env.VITE_API_KEY;
 

@@ -30,7 +30,6 @@ export const useUserSearchStore = defineStore('search-user', {
   actions: {
     fetchUser(userLogin: string) {
       const { variables, load, onResult, onError } = getUsers();
-      console.log('userLogin');
       variables.value = {
         username: userLogin,
       };

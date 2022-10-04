@@ -58,7 +58,6 @@ import NavMainMobile from '@/components/navigation/NavMainMobile.vue';
 import { useSharedStore } from '@/stores/shared';
 import { useUserSearchStore } from '@/stores/user.search';
 import { getUserProfile } from '@/composables/useUserProfile';
-// import { getUsers } from '@/composables/useUserFetch';
 import type { UserProfileSummary } from '@/types';
 
 const store = useSharedStore();
