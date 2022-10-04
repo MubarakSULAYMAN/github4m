@@ -183,11 +183,18 @@ a .item-group [class$='-count'] {
 
 .route-active .route-name {
   font-weight: 600;
+  color: var(--vt-c-black);
 }
 
 @media only screen and (max-width: 767px) {
   nav {
     padding-top: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  a .item-group [class$='-count'] {
+    color: var(--vt-c-black);
   }
 }
 </style>
