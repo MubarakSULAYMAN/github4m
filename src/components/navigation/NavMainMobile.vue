@@ -4,6 +4,7 @@
       type="text"
       name="user-search"
       id="useer-search"
+      autocomplete="off"
       class="search-input"
       placeholder="Search"
       v-model="store.searchTerm"

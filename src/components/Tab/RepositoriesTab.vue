@@ -4,6 +4,7 @@
       type="text"
       name="repository-search"
       id="repository-search"
+      autocomplete="off"
       placeholder="Filter result"
       title="Find a repository..."
       v-model="searchTerm"

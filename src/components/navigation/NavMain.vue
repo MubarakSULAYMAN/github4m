@@ -12,6 +12,7 @@
             type="text"
             name="user-search"
             id="user-search"
+            autocomplete="off"
             placeholder="Search or jump to..."
             v-model="store.searchTerm"
             @keydown.enter="getUser"
