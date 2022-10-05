@@ -196,5 +196,9 @@ a .item-group [class$='-count'] {
   a .item-group [class$='-count'] {
     color: var(--vt-c-black);
   }
+
+  .route-active .route-name {
+    color: var(--vt-c-white);
+  }
 }
 </style>
