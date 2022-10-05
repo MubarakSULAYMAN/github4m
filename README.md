@@ -13,17 +13,12 @@ This is a clone of [Github](https://github.com). I have earlier done this before
 - [Githubb](https://github.com/MubarakSULAYMAN/githubb) - Optimize the full potentials of GitHub GraphQL API
 - [Github](https://github.com/MubarakSULAYMAN/github) - A clone of Github home page
 
-## Table of contents
+I must confess, GitHub has really improved and a lot has changed.
 
-- [Project Title](#github-for-me-(-github4m-))
-<!-- - [Demo-Preview](#demo-preview) -->
-- [Table of contents](#table-of-contents)
+## Getting started
 
-- [Getting started](#getting-started)
-
-- [Prerequisites](#prerequisites)
-
-- [Project setup](#project-setup)
+A clone of GitHub search that features user and repository search. Use the search input to search for a keyword and select a user from the result to view their repositories.
+This implemetation features dark mode based on system theme.
 
 ## Framework & Libraries
 
@@ -37,10 +32,6 @@ This is a clone of [Github](https://github.com). I have earlier done this before
 - [Day.js](https://day.js.org/) - A fast 2kB javascript date utility library
 <!-- - [vue-meta](https://vue-meta.nuxtjs.org/) - A HTML Metadata manager for Vue.js -->
 - [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) - A JavaScript style guide
-
-# What it does
-
-A clone of GitHub search that features user and repository search. Use the search input to search for a keyword and select a user from the result to view their repositories.
 
 ## Performance & Optimization
 
@@ -95,12 +86,8 @@ npm run lint
 
 See also the list of [contributors](https://github.com/MubarakSULAYMAN/little-url/contributors) who participated in this project.
 
-[(Back to top)](#github-for-me-(-github4m-))
-
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. :bow:
 
 Kindly contact me on :email: **mubaracksulaymann@gmail.com**. You can review **[my resume here](https://t.co/CBsfpckBsr)**. :nerd_face:. Thank you
-
-[(Back to top)](#github-for-me-(-github4m-))

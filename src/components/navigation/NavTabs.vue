@@ -3,7 +3,7 @@
     <span class="empty-space">
       <div class="user-details" v-if="showItem">
         <img :src="userProfile?.avatarUrl" :alt="userProfile?.name" class="image-round-full" />
-        <div class="username" v-texxt="userProfile?.login" />
+        <div class="username" v-text="userProfile?.login" />
       </div>
     </span>
 

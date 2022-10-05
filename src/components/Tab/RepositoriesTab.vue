@@ -8,7 +8,7 @@
       title="Find a repository..."
       v-model="searchTerm"
     />
-    <p v-if="!store.isLoading && !repositories?.edges">No repo found for this user.</p>
+    <p v-if="!store.isLoading && !repositories?.edges">No public repo found for this user.</p>
 
     <RepoSummary
       v-else
