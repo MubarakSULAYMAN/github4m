@@ -12,10 +12,10 @@
         id="github-home-search"
         autocomplete="off"
         placeholder="Search GitHub"
-        v-model="searchTerm"
-        @keydown.enter="getUser(searchTerm)"
+        v-model="store.searchTerm"
+        @keydown.enter="getUser"
       />
-      <button class="search-button" @click="getUser(searchTerm)">Search</button>
+      <button class="search-button" @click="getUser">Search</button>
     </div>
 
     <p class="protip"><b>ProTip!</b> For an advanced search, use some of our prefixes</p>
@@ -28,8 +28,8 @@
       id="github-search"
       autocomplete="off"
       placeholder="Search GitHub"
-      v-model="searchTerm"
-      @keydown.enter="getUser(searchTerm)"
+      v-model="store.searchTerm"
+      @keydown.enter="getUser"
     />
 
     <SearchResultNav :users-count="usersCount" />
@@ -60,7 +60,6 @@ const store = useSharedStore();
 const route = useRoute();
 const router = useRouter();
 const storeSearch = useUserSearchStore();
-const searchTerm = store.searchTerm;
 const username = computed(() => route.query.q);
 
 const usersCount = computed(() => storeSearch.users?.search.userCount);
@@ -68,8 +67,8 @@ const users = computed(() =>
   storeSearch.users?.search.edges?.filter((user) => user?.node.__typename === 'User')
 );
 
-function getUser(userLogin: string) {
-  storeSearch.fetchUser(userLogin);
+function getUser() {
+  storeSearch.fetchUser(store.searchTerm);
 
   router.replace({
     name: 'search-result',
@@ -81,7 +80,7 @@ function getUser(userLogin: string) {
 }
 
 if (username.value) {
-  getUser(String(username.value));
+  getUser();
 }
 </script>
 
