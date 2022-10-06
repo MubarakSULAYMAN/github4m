@@ -6,6 +6,7 @@ export type NavMenu = {
 type BasicUser = {
   name: string;
   login: string;
+  avatarUrl: string;
   bio: string;
   location: string;
   email: string;

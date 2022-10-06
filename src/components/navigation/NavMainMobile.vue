@@ -9,6 +9,7 @@
       placeholder="Search"
       v-model="store.searchTerm"
       @keydown.enter="getUser"
+      v-if="!(route.name === 'search-result' && !route.query.q)"
     />
 
     <RouterLink to="" v-for="menu in mobileNavMenu" :key="menu.name">{{ menu.name }}</RouterLink>
@@ -29,7 +30,6 @@ import { computed, reactive } from 'vue';
 import type { NavMenu } from '@/types';
 import IconSignOut from '@/components/icons/IconSignOut.vue';
 import { useSharedStore } from '@/stores/shared';
-import { useUserSearchStore } from '@/stores/user.search';
 
 interface Props {
   username: string;
@@ -48,7 +48,6 @@ defineEmits<{
 const store = useSharedStore();
 const router = useRouter();
 const route = useRoute();
-const storeSearch = useUserSearchStore();
 const userProfile = computed(() => store.currentUser?.user);
 
 const mobileNavMenu = reactive<NavMenu[]>([
@@ -84,7 +83,6 @@ const mobileNavMenu = reactive<NavMenu[]>([
 
 function getUser() {
   if (route.name === 'search-result') {
-    storeSearch.fetchUser(store.searchTerm);
     router.replace({
       name: 'search-result',
       query: {

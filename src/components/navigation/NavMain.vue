@@ -7,7 +7,10 @@
           <IconGithub />
         </RouterLink>
 
-        <div :class="['search-wrapper', { 'wrapper-active': onFocus }]">
+        <div
+          :class="['search-wrapper', { 'wrapper-active': onFocus }]"
+          v-if="!(route.name === 'search-result' && !route.query.q)"
+        >
           <input
             type="text"
             name="user-search"
@@ -58,15 +61,13 @@ import IconCaretDown from '@/components/icons/IconCaretDown.vue';
 import type { NavMenu } from '@/types';
 import NavMainMobile from '@/components/navigation/NavMainMobile.vue';
 import { useSharedStore } from '@/stores/shared';
-import { useUserSearchStore } from '@/stores/user.search';
 import { getUserProfile } from '@/composables/useUserProfile';
 import type { UserProfileSummary } from '@/types';
 
 const store = useSharedStore();
 const router = useRouter();
 const route = useRoute();
-const storeSearch = useUserSearchStore();
-const githubSearchInput = ref<any>(null);
+const githubSearchInput = ref<HTMLInputElement | null>(null);
 const onFocus = ref<boolean>(false);
 
 const userProfile = computed(() => store.currentUser?.user);
@@ -99,7 +100,6 @@ function getUser() {
   onFocus.value = false;
 
   if (route.name === 'search-result') {
-    storeSearch.fetchUser(store.searchTerm);
     router.replace({
       name: 'search-result',
       query: {
@@ -141,11 +141,11 @@ function fetchUserProfile(userLogin: string) {
   });
 }
 
-fetchUserProfile(String(username.value) || 'MubarakSULAYMAN');
+fetchUserProfile(String(username.value));
 
 watch(
   () => route.fullPath,
-  () => fetchUserProfile(String(username.value) || 'MubarakSULAYMAN')
+  () => fetchUserProfile(String(username.value))
 );
 </script>
 

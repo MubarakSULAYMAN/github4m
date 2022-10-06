@@ -60,27 +60,27 @@ const starCount = computed(() => userProfile.value?.starredRepositories?.totalCo
 const navTabs = reactive<NavTabs[]>([
   {
     name: 'Overview',
-    route: `/${username.value || 'MubarakSULAYMAN'}`,
+    route: `/${username.value}`,
     icon: IconBookOpen,
   },
   {
     name: 'Repositories',
-    route: `/${username.value || 'MubarakSULAYMAN'}?tab=repositories`,
+    route: `/${username.value}?tab=repositories`,
     icon: IconBookClose,
   },
   {
     name: 'Projects',
-    route: `/${username.value || 'MubarakSULAYMAN'}?tab=projects`,
+    route: `/${username.value}?tab=projects`,
     icon: IconTable,
   },
   {
     name: 'Packages',
-    route: `/${username.value || 'MubarakSULAYMAN'}?tab=packages`,
+    route: `/${username.value}?tab=packages`,
     icon: IconBox,
   },
   {
     name: 'Stars',
-    route: `/${username.value || 'MubarakSULAYMAN'}?tab=stars`,
+    route: `/${username.value}?tab=stars`,
     icon: IconStar,
   },
 ]);
@@ -89,7 +89,6 @@ const showItem = ref<boolean>(true);
 
 function onScroll(e: any) {
   if (typeof window === 'undefined') return;
-  // if (element.getBoundingClientRect().bottom < window.innerHeight) {
   const top = window.pageYOffset || e.target.scrollTop || 0;
   showItem.value = top > 370;
 }

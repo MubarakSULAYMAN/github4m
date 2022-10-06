@@ -4,7 +4,7 @@
 
     <section class="main-content">
       <div>
-        <UserProfileNav ref="scrollComponent" />
+        <UserProfileNav />
       </div>
 
       <div class="tabs-wrapper">

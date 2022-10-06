@@ -7,6 +7,7 @@ export function getRepos() {
       query userRepositories($username: String!) {
         user(login: $username) {
           repositories(first: 48, orderBy: { field: UPDATED_AT, direction: DESC }) {
+            # repositories(first: 48, orderBy: , orderBy: {field: PUSHED_AT, direction: DESC}) {
             edges {
               node {
                 name

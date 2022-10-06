@@ -26,7 +26,7 @@ export const useUserSearchStore = defineStore('search-user', {
   }),
 
   actions: {
-    fetchUser(userLogin: string) {
+    fetchUsers(userLogin: string) {
       const store = useSharedStore();
       const { variables, load, onResult, onError } = getUsers();
       variables.value = {
