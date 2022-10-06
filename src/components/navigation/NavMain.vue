@@ -7,7 +7,10 @@
           <IconGithub />
         </RouterLink>
 
-        <div :class="['search-wrapper', { 'wrapper-active': onFocus }]">
+        <div
+          :class="['search-wrapper', { 'wrapper-active': onFocus }]"
+          v-if="!(route.name === 'search-result' && !route.query.q)"
+        >
           <input
             type="text"
             name="user-search"
@@ -97,9 +100,9 @@ const toggleMobileNav = () => (showMobileNav.value = !showMobileNav.value);
 function getUser() {
   githubSearchInput.value?.blur();
   onFocus.value = false;
+  storeSearch.fetchUser(store.searchTerm);
 
   if (route.name === 'search-result') {
-    storeSearch.fetchUser(store.searchTerm);
     router.replace({
       name: 'search-result',
       query: {

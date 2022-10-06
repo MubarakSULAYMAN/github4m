@@ -9,6 +9,7 @@
       placeholder="Search"
       v-model="store.searchTerm"
       @keydown.enter="getUser"
+      v-if="!(route.name === 'search-result' && !route.query.q)"
     />
 
     <RouterLink to="" v-for="menu in mobileNavMenu" :key="menu.name">{{ menu.name }}</RouterLink>
@@ -83,8 +84,9 @@ const mobileNavMenu = reactive<NavMenu[]>([
 ]);
 
 function getUser() {
+  storeSearch.fetchUser(store.searchTerm);
+
   if (route.name === 'search-result') {
-    storeSearch.fetchUser(store.searchTerm);
     router.replace({
       name: 'search-result',
       query: {
