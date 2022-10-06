@@ -30,7 +30,6 @@ import { computed, reactive } from 'vue';
 import type { NavMenu } from '@/types';
 import IconSignOut from '@/components/icons/IconSignOut.vue';
 import { useSharedStore } from '@/stores/shared';
-import { useUserSearchStore } from '@/stores/user.search';
 
 interface Props {
   username: string;
@@ -49,7 +48,6 @@ defineEmits<{
 const store = useSharedStore();
 const router = useRouter();
 const route = useRoute();
-const storeSearch = useUserSearchStore();
 const userProfile = computed(() => store.currentUser?.user);
 
 const mobileNavMenu = reactive<NavMenu[]>([
@@ -84,8 +82,6 @@ const mobileNavMenu = reactive<NavMenu[]>([
 ]);
 
 function getUser() {
-  storeSearch.fetchUser(store.searchTerm);
-
   if (route.name === 'search-result') {
     router.replace({
       name: 'search-result',

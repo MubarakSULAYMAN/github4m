@@ -1,5 +1,5 @@
 <template>
-  <section class="search-home" v-if="!username">
+  <section class="search-home" v-if="!queryTerm">
     <div class="search-note">
       <IconHandLense />
       <p>Search more than <b>99M</b> users</p>
@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useSharedStore } from '@/stores/shared';
 import { useUserSearchStore } from '@/stores/user.search';
@@ -55,7 +55,7 @@ const store = useSharedStore();
 const route = useRoute();
 const router = useRouter();
 const storeSearch = useUserSearchStore();
-const username = computed(() => route.query.q);
+const queryTerm = computed(() => route.query.q);
 
 const usersCount = computed(() => storeSearch.users?.search.userCount);
 const users = computed(() =>
@@ -63,20 +63,29 @@ const users = computed(() =>
 );
 
 function getUser() {
-  storeSearch.fetchUser(store.searchTerm);
+  storeSearch.fetchUsers(String(queryTerm.value));
 
   router.replace({
     name: 'search-result',
     query: {
-      q: store.searchTerm,
+      q: queryTerm.value,
       type: 'users',
     },
   });
 }
 
-if (username.value) {
+if (queryTerm.value) {
   getUser();
 }
+
+watch(
+  () => route.fullPath,
+  () => {
+    if (queryTerm.value) {
+      getUser();
+    }
+  }
+);
 </script>
 
 <style scoped>

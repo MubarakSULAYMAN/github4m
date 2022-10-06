@@ -61,14 +61,12 @@ import IconCaretDown from '@/components/icons/IconCaretDown.vue';
 import type { NavMenu } from '@/types';
 import NavMainMobile from '@/components/navigation/NavMainMobile.vue';
 import { useSharedStore } from '@/stores/shared';
-import { useUserSearchStore } from '@/stores/user.search';
 import { getUserProfile } from '@/composables/useUserProfile';
 import type { UserProfileSummary } from '@/types';
 
 const store = useSharedStore();
 const router = useRouter();
 const route = useRoute();
-const storeSearch = useUserSearchStore();
 const githubSearchInput = ref<HTMLInputElement | null>(null);
 const onFocus = ref<boolean>(false);
 
@@ -100,7 +98,6 @@ const toggleMobileNav = () => (showMobileNav.value = !showMobileNav.value);
 function getUser() {
   githubSearchInput.value?.blur();
   onFocus.value = false;
-  storeSearch.fetchUser(store.searchTerm);
 
   if (route.name === 'search-result') {
     router.replace({
@@ -144,11 +141,11 @@ function fetchUserProfile(userLogin: string) {
   });
 }
 
-fetchUserProfile(String(username.value) || 'MubarakSULAYMAN');
+fetchUserProfile(String(username.value));
 
 watch(
   () => route.fullPath,
-  () => fetchUserProfile(String(username.value) || 'MubarakSULAYMAN')
+  () => fetchUserProfile(String(username.value))
 );
 </script>
 
