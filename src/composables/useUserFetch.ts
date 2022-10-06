@@ -13,6 +13,7 @@ export function getUsers() {
                 name
                 login
                 bio
+                avatarUrl
                 location
                 email
                 url

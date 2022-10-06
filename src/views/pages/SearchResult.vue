@@ -36,7 +36,7 @@
 
       <p class="no-user" v-if="!usersCount">No user found</p>
 
-      <UserSearchSummary v-for="user in users" :key="user?.node.login" :user-info="user?.node" />
+      <SearchSummaryCard v-for="user in users" :key="user?.node.login" :user-info="user?.node" />
     </section>
   </div>
 </template>
@@ -48,7 +48,7 @@ import { useSharedStore } from '@/stores/shared';
 import { useUserSearchStore } from '@/stores/user.search';
 import IconHandLense from '@/components/icons/IconHandLense.vue';
 import SearchResultNav from '@/components/navigation/SearchResultNav.vue';
-import UserSearchSummary from '@/components/card/UserSearchSummary.vue';
+import SearchSummaryCard from '@/components/card/SearchSummaryCard.vue';
 import GithubSearchInput from '@/components/GithubSearchInput.vue';
 
 const store = useSharedStore();
