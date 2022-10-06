@@ -4,6 +4,7 @@
   --vt-c-white-soft: #f8f8f8;
   --vt-c-white-mute: #f2f2f2;
   --vt-c-black: #24292f;
+  --vt-c-black-dark: #0D1117;
   --vt-c-black-soft: #222222;
   --vt-c-black-mute: #282828;
 
@@ -34,6 +35,7 @@
 /* semantic color variables for this project */
 :root {
   --color-background: var(--vt-c-white);
+  --color-background-dark: var(--vt-c-white);
   --color-background-soft: var(--vt-c-white-soft);
   --color-background-mute: var(--vt-c-white-mute);
 
@@ -49,6 +51,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --color-background: var(--vt-c-black);
+    --color-background-dark: var(--vt-c-black-dark);
     --color-background-soft: var(--vt-c-black-soft);
     --color-background-mute: var(--vt-c-black-mute);
 
@@ -76,7 +79,8 @@
 body {
   min-height: 100vh;
   color: var(--color-text);
-  background: var(--color-background);
+  /* background: var(--color-background); */
+  background: var(--color-background-dark);
   transition: color 0.5s, background-color 0.5s;
   line-height: 1.6;
   /* font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
