@@ -6,14 +6,11 @@
     </div>
 
     <div class="search-area">
-      <input
-        type="text"
-        name="github-home-search"
-        id="github-home-search"
-        autocomplete="off"
-        placeholder="Search GitHub"
+      <GithubSearchInput
         v-model="store.searchTerm"
-        @keydown.enter="getUser"
+        @search="getUser"
+        placeholder="Search GitHub"
+        class="github-search-home"
       />
       <button class="search-button" @click="getUser">Search</button>
     </div>
@@ -22,14 +19,11 @@
   </section>
 
   <div class="main-content" v-else>
-    <input
-      type="text"
-      name="github-search"
-      id="github-search"
-      autocomplete="off"
-      placeholder="Search GitHub"
+    <GithubSearchInput
       v-model="store.searchTerm"
-      @keydown.enter="getUser"
+      @search="getUser"
+      placeholder="Search GitHub"
+      class="github-search-result"
     />
 
     <SearchResultNav :users-count="usersCount" />
@@ -48,13 +42,14 @@
 </template>
 
 <script setup lang="ts">
-import SearchResultNav from '@/components/navigation/SearchResultNav.vue';
-import UserSearchSummary from '@/components/card/UserSearchSummary.vue';
-import { useSharedStore } from '@/stores/shared';
-import { useUserSearchStore } from '@/stores/user.search';
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useSharedStore } from '@/stores/shared';
+import { useUserSearchStore } from '@/stores/user.search';
 import IconHandLense from '@/components/icons/IconHandLense.vue';
+import SearchResultNav from '@/components/navigation/SearchResultNav.vue';
+import UserSearchSummary from '@/components/card/UserSearchSummary.vue';
+import GithubSearchInput from '@/components/GithubSearchInput.vue';
 
 const store = useSharedStore();
 const route = useRoute();
@@ -115,22 +110,11 @@ b {
   font-weight: 600;
 }
 
-#github-home-search,
-#github-search {
-  border: 1px solid var(--color-border-hover);
-  border-radius: 4px;
-}
-
-#github-home-search {
+.github-search-home {
   width: calc(90% - 12px);
   padding: 7px 12px;
   font-size: 16px;
   margin-right: 12px;
-}
-
-#github-home-search:focus,
-#github-search:focus {
-  border: 2px solid var(--gh4-blue);
 }
 
 .search-button {
@@ -159,7 +143,7 @@ b {
   font-weight: 600;
 }
 
-#github-search {
+.github-search-result {
   display: none;
   width: 100%;
   padding: 6px 12px;
@@ -191,11 +175,11 @@ b {
     font-size: 18px;
   }
 
-  #github-search {
+  .github-search-result {
     display: inline-block;
   }
 
-  #github-home-search,
+  .github-search-home,
   .search-button {
     width: 100%;
     margin-right: 0;

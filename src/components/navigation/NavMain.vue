@@ -66,7 +66,7 @@ const store = useSharedStore();
 const router = useRouter();
 const route = useRoute();
 const storeSearch = useUserSearchStore();
-const githubSearchInput = ref<any>(null);
+const githubSearchInput = ref<HTMLInputElement | null>(null);
 const onFocus = ref<boolean>(false);
 
 const userProfile = computed(() => store.currentUser?.user);

@@ -1,14 +1,12 @@
 <template>
   <div>
-    <input
-      type="text"
-      name="repository-search"
-      id="repository-search"
-      autocomplete="off"
+    <GithubSearchInput
+      v-model="searchTerm"
+      class="github-search-tab"
       placeholder="Filter result"
       title="Find a repository..."
-      v-model="searchTerm"
     />
+
     <p v-if="!store.isLoading && !repositories?.edges">No public repo found for this user.</p>
 
     <RepoSummary
@@ -21,10 +19,11 @@
 </template>
 
 <script setup lang="ts">
-import RepoSummary from '@/components/card/RepoSummary.vue';
-import { getRepos } from '@/composables/useRepositoryFetch';
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import RepoSummary from '@/components/card/RepoSummary.vue';
+import GithubSearchInput from '@/components/GithubSearchInput.vue';
+import { getRepos } from '@/composables/useRepositoryFetch';
 import { useSharedStore } from '@/stores/shared';
 import type { RepositorySummary, UserRepositoriesSummary } from '@/types';
 
@@ -65,27 +64,18 @@ fetchUserProfile(String(username.value) || 'MubarakSULAYMAN');
 </script>
 
 <style scoped>
-#repository-search {
+.github-search-tab {
   width: 50%;
-  margin: 20px 0;
-  padding: 6px 12px;
-  font-size: 14px;
-  border: 1px solid var(--color-border-hover);
-  border-radius: 4px;
-}
-
-#repository-search:focus {
-  border: 2px solid var(--gh4-blue);
 }
 
 @media only screen and (max-width: 768px) {
-  #repository-search {
+  .github-search-tab {
     width: 80%;
   }
 }
 
 @media only screen and (max-width: 425px) {
-  #repository-search {
+  .github-search-tab {
     width: 100%;
   }
 }
