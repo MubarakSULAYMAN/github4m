@@ -2,23 +2,30 @@
 
 ## Side note
 
-The question is always "Why GitHub?". I am yet to see a project built with primarily black and white and looks awesome. It is robust too.
+The question is always "Why GitHub?". I am yet to see a project built primarily with black and white and looks this awesome. It is robust too.
 
 ## Overview
 
-This is a clone of [Github](https://github.com). I have earlier done this before but here is a combine effort of all my previous try which some were over 2 years ago. For your reference, kindly check out:
+This is a clone of [Github](https://github.com). I have earlier done this before but here is a combine effort of all my previous try of which some were done over 2 years ago. For your reference, kindly check out:
 
 - [Githook](https://github.com/MubarakSULAYMAN/gitook) - Primarily has user search functionality with some query filter functions.
-
 - [Githubb](https://github.com/MubarakSULAYMAN/githubb) - Optimize the full potentials of GitHub GraphQL API
 - [Github](https://github.com/MubarakSULAYMAN/github) - A clone of Github home page
 
-I must confess, GitHub has really improved and a lot has changed.
+I must confess, GitHub has really improved and a lot has changed. This inspired me to try it all afresh.
 
 ## Getting started
 
-A clone of GitHub search that features user and repository search. Use the search input to search for a keyword and select a user from the result to view their repositories.
-This implemetation features dark mode based on system theme.
+This is a clone of GitHub that primarily features user and repository search.
+
+- Use the search input to search for a keyword
+- The keyword returns a list of users who has the keyword in their details
+- Select a user from the result to view their repositories
+<!-- - You can select a repository to view its commit history. -->
+
+> - Both the user and repository card has some hyperlinks which may lead you out of the app.
+> - This implemetation features dark mode based on system theme.
+> - It also has HTTP caching to avoid resources refetching.
 
 ## Framework & Libraries
 
