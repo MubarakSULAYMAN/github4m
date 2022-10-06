@@ -38,7 +38,7 @@ const filteredResult = computed(() =>
   )
 );
 
-function fetchUserProfile(userLogin: string) {
+function fetchUserRepos(userLogin: string) {
   const { variables, load, onResult, onError } = getRepos();
   variables.value = {
     username: userLogin,
@@ -60,7 +60,7 @@ function fetchUserProfile(userLogin: string) {
   });
 }
 
-fetchUserProfile(String(username.value) || 'MubarakSULAYMAN');
+fetchUserRepos(String(username.value));
 </script>
 
 <style scoped>
