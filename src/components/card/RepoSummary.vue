@@ -60,7 +60,12 @@
         <span class="license-name" v-text="repo.licenseInfo.name" />
       </div>
 
-      <div class="relative-date">Updated on {{ customDate(repo.updatedAt) }}</div>
+      <div class="relative-date">
+        Updated on
+        <span :title="`${dayjs(repo.updatedAt).format('D MMM YYYY, HH:MM')} ${currentTimezone}`">
+          {{ customDate(repo.updatedAt) }}
+        </span>
+      </div>
     </div>
   </ItemGroup>
 </template>
@@ -75,7 +80,12 @@ import type { Repository } from '@/types';
 import { computed } from 'vue';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+// import utc from 'dayjs/plugin/utc';
+// import timezone from 'dayjs/plugin/timezone';
+
 dayjs.extend(relativeTime);
+// dayjs.extend(utc);
+// dayjs.extend(timezone);
 // import type { CSSProperties } from 'vue';
 
 interface Props {
@@ -107,6 +117,19 @@ function customDate(date: string) {
   }
   return dayjs(date).fromNow();
 }
+
+const userLocale =
+  navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language;
+
+const currentTimezone = computed(() =>
+  new Date()
+    .toLocaleDateString(userLocale, {
+      day: '2-digit',
+      // timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      timeZoneName: 'short',
+    })
+    .slice(4)
+);
 </script>
 
 <style scoped>
@@ -132,6 +155,10 @@ function customDate(date: string) {
   justify-content: space-between;
 }
 
+.repo-summary {
+  width: calc(100% - 100px);
+}
+
 .title,
 .repo-origin,
 .repo-origin a,
@@ -141,7 +168,13 @@ button span {
   color: var(--gh4-gray-3);
 }
 
+.title {
+  flex-wrap: wrap;
+  word-break: break-all;
+}
+
 .title a {
+  margin-right: 12px;
   color: var(--gh4-blue);
   font-size: 20px;
   font-weight: 600;
@@ -152,7 +185,6 @@ button span {
 }
 
 .title .category {
-  margin-left: 12px;
   padding: 0 8px;
   border: 1px solid var(--color-border-hover);
   border-radius: 10px;
@@ -168,8 +200,12 @@ button span {
   margin-top: 8px;
 }
 
-.repo-topics {
+.repo-topics,
+.repo-tips {
   flex-wrap: wrap;
+}
+
+.repo-topics {
   margin: 8px 0;
 }
 
@@ -192,19 +228,21 @@ button span {
 }
 
 button {
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  width: 100px;
-  height: 30px;
+  width: 80px;
+  height: 26px;
   padding: 0 12px;
   border: 1px solid var(--color-border-hover);
   border-radius: 4px;
   background-color: var(--gh4-gray-4);
 }
 
+button svg {
+  vertical-align: middle;
+}
+
 button span {
   margin-left: 12px;
+  vertical-align: middle;
 }
 
 button:hover {
@@ -244,5 +282,11 @@ button:hover {
 .fork-count,
 .license-name {
   margin-left: 4px;
+}
+
+@media only screen and (max-width: 767px) {
+  button {
+    margin: auto;
+  }
 }
 </style>

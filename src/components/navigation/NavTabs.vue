@@ -41,7 +41,7 @@ import type { NavMenu } from '@/types';
 import IconBookOpen from '@/components/icons/IconBookOpen.vue';
 import IconBookClose from '@/components/icons/IconBookClose.vue';
 import IconTable from '@/components/icons/IconTable.vue';
-import IconBox from '@/components/icons/IconBox.vue';
+import IconCube from '@/components/icons/IconCube.vue';
 import IconStar from '@/components/icons/IconStar.vue';
 import { useSharedStore } from '@/stores/shared';
 
@@ -76,7 +76,7 @@ const navTabs = reactive<NavTabs[]>([
   {
     name: 'Packages',
     route: `/${username.value}?tab=packages`,
-    icon: IconBox,
+    icon: IconCube,
   },
   {
     name: 'Stars',
@@ -108,6 +108,7 @@ nav {
   padding-top: 20px;
   border-bottom: 1px solid var(--color-border-hover);
   background-color: var(--color-background);
+  overflow-x: auto;
   z-index: 1;
 }
 
@@ -186,8 +187,18 @@ a .item-group [class$='-count'] {
 }
 
 @media only screen and (max-width: 767px) {
+  /* .empty-space {
+    display: none;
+  } */
+
   nav {
     padding-top: 0;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .empty-space {
+    display: none;
   }
 }
 
