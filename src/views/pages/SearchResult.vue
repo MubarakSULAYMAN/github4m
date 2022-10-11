@@ -1,44 +1,47 @@
 <template>
-  <section class="search-home" v-if="!queryTerm">
-    <div class="search-note">
-      <IconHandLense />
-      <p>Search more than <b>99M</b> users</p>
-    </div>
+  <AppLoader :is-loading="isLoading">
+    <section class="search-home" v-if="!queryTerm">
+      <div class="search-note">
+        <IconHandLense />
+        <p>Search more than <b>99M</b> users</p>
+      </div>
 
-    <div class="search-area">
+      <div class="search-area">
+        <GithubSearchInput
+          v-model="store.searchTerm"
+          @search="getUser"
+          placeholder="Search GitHub"
+          class="github-search-home"
+        />
+        <button class="search-button" @click="getUser">Search</button>
+      </div>
+
+      <p class="protip"><b>ProTip!</b> For an advanced search, use some of our prefixes</p>
+    </section>
+
+    <div class="main-content" v-else>
       <GithubSearchInput
         v-model="store.searchTerm"
         @search="getUser"
         placeholder="Search GitHub"
-        class="github-search-home"
+        class="github-search-result"
       />
-      <button class="search-button" @click="getUser">Search</button>
+
+      <SearchResultNav :users-count="usersCount" />
+
+      <section>
+        <p class="count">
+          {{ usersCount?.toLocaleString(userLocale) || 0 }}
+          <span v-if="usersCount! > 1">users</span>
+          <span v-else>user</span>
+        </p>
+
+        <p class="no-user" v-if="!usersCount">No user found</p>
+
+        <SearchSummaryCard v-for="user in users" :key="user?.node.login" :user-info="user?.node" />
+      </section>
     </div>
-
-    <p class="protip"><b>ProTip!</b> For an advanced search, use some of our prefixes</p>
-  </section>
-
-  <div class="main-content" v-else>
-    <GithubSearchInput
-      v-model="store.searchTerm"
-      @search="getUser"
-      placeholder="Search GitHub"
-      class="github-search-result"
-    />
-
-    <SearchResultNav :users-count="usersCount" />
-
-    <section>
-      <p class="count">
-        {{ usersCount?.toLocaleString('en') || 0 }} <span v-if="usersCount! > 1">users</span>
-        <span v-else>user</span>
-      </p>
-
-      <p class="no-user" v-if="!usersCount">No user found</p>
-
-      <SearchSummaryCard v-for="user in users" :key="user?.node.login" :user-info="user?.node" />
-    </section>
-  </div>
+  </AppLoader>
 </template>
 
 <script setup lang="ts">
@@ -50,14 +53,17 @@ import IconHandLense from '@/components/icons/IconHandLense.vue';
 import SearchResultNav from '@/components/navigation/SearchResultNav.vue';
 import SearchSummaryCard from '@/components/card/SearchSummaryCard.vue';
 import GithubSearchInput from '@/components/GithubSearchInput.vue';
+import AppLoader from '@/components/AppLoader.vue';
+import { userLocale } from '@/utils';
 
 const store = useSharedStore();
 const route = useRoute();
 const router = useRouter();
 const storeSearch = useUserSearchStore();
+const isLoading = computed(() => store.isLoading);
 const queryTerm = computed(() => route.query.q);
 
-const usersCount = computed(() => storeSearch.users?.search.userCount);
+const usersCount = computed(() => storeSearch.users?.search.userCount || 12345667890);
 const users = computed(() =>
   storeSearch.users?.search.edges?.filter((user) => user?.node.__typename === 'User')
 );

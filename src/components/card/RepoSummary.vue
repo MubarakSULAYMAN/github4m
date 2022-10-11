@@ -76,17 +76,14 @@ import ItemGroup from '@/components/card/ItemGroup.vue';
 import IconStar from '@/components/icons/IconStar.vue';
 import IconBranch from '@/components/icons/IconBranch.vue';
 import IconScale from '@/components/icons/IconScale.vue';
+import { userLocale } from '@/utils';
 import type { Repository } from '@/types';
 import { computed } from 'vue';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-// import utc from 'dayjs/plugin/utc';
-// import timezone from 'dayjs/plugin/timezone';
+// import type { CSSProperties } from 'vue';
 
 dayjs.extend(relativeTime);
-// dayjs.extend(utc);
-// dayjs.extend(timezone);
-// import type { CSSProperties } from 'vue';
 
 interface Props {
   repositoryInfo: Repository;
@@ -118,14 +115,10 @@ function customDate(date: string) {
   return dayjs(date).fromNow();
 }
 
-const userLocale =
-  navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language;
-
 const currentTimezone = computed(() =>
   new Date()
     .toLocaleDateString(userLocale, {
       day: '2-digit',
-      // timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       timeZoneName: 'short',
     })
     .slice(4)

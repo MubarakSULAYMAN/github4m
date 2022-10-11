@@ -187,10 +187,6 @@ a .item-group [class$='-count'] {
 }
 
 @media only screen and (max-width: 767px) {
-  /* .empty-space {
-    display: none;
-  } */
-
   nav {
     padding-top: 0;
   }

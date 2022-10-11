@@ -28,15 +28,16 @@ export const useUserSearchStore = defineStore('search-user', {
   actions: {
     fetchUsers(userLogin: string) {
       const store = useSharedStore();
-      const { variables, load, onResult, onError } = getUsers();
+      const { variables, load, loading, onResult, onError } = getUsers();
       variables.value = {
         username: userLogin,
       };
+
+      store.isLoading = loading.value;
       load();
-      store.loading();
 
       onResult((queryResult: { data: Users }) => {
-        store.done();
+        store.isLoading = loading.value;
         this.users = queryResult.data;
 
         // console.log('queryResult.networkStatus: ', queryResult.networkStatus);

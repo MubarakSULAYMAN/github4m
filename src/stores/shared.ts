@@ -4,6 +4,8 @@ import type { UserProfileSummary } from '@/types';
 type Store = {
   error: string | undefined | null;
   isLoading: boolean;
+  isProfileLoading: boolean;
+  isRepoLoading: boolean;
   searchTerm: string;
   // searchLoading: boolean;
   // searchError: ApolloError | null;
@@ -15,6 +17,8 @@ export const useSharedStore = defineStore('shared', {
   state: (): Store => ({
     error: null,
     isLoading: false,
+    isProfileLoading: false,
+    isRepoLoading: false,
     searchTerm: '',
     currentUser: undefined,
   }),

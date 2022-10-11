@@ -8,15 +8,10 @@ import './assets/main.css';
 
 import { DefaultApolloClient, provideApolloClient } from '@vue/apollo-composable';
 import { apolloClient } from '@/services/api.service';
-// import dayjs from 'dayjs';
-// import relativeTime from 'dayjs/plugin/relativeTime';
-// dayjs.extend(relativeTime);
 
 const app = createApp({
   setup() {
     provide(DefaultApolloClient, apolloClient);
-    // provide('Dayjs', dayjs);
-    // inject('Dayjs');
   },
 
   render: () => h(App),
