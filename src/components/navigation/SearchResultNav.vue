@@ -1,10 +1,10 @@
 <template>
   <div class="links-wrapper">
-    <RouterLink to="" v-for="category in resultCategory" :key="category.name">
+    <RouterLink to="javascript:void(0)" v-for="category in resultCategory" :key="category.name">
       <span class="title">{{ category.name }}</span>
-      <span :class="['count', { 'count-zero': !category.count }]">{{
-        category.count?.toLocaleString('en')
-      }}</span>
+      <span :class="['count', { 'count-zero': !category.count }]">
+        {{ category.count?.toLocaleString(userLocale) }}
+      </span>
     </RouterLink>
   </div>
 </template>
@@ -12,6 +12,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
+import { userLocale } from '@/utils';
 
 interface Props {
   usersCount: number;
@@ -57,7 +58,7 @@ const resultCategory = computed(() => [
 
 .links-wrapper a:not(:last-child) {
   border-bottom: 1px solid var(--color-border-hover);
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 
 .links-wrapper a:not(:last-child):hover {

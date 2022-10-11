@@ -1,15 +1,11 @@
 <template>
-  <main>
+  <main class="container-wrapper">
     <NavTabs class="tabs-large-device" />
 
     <section class="main-content">
-      <div>
-        <UserProfileNav />
-      </div>
+      <UserProfileNav />
 
-      <div class="tabs-wrapper">
-        <NavTabs class="tabs-small-device" />
-      </div>
+      <NavTabs class="tabs-small-device" />
 
       <div class="main-page">
         <component :is="currentTab"></component>
@@ -62,6 +58,11 @@ const currentTab = computed(() => {
 </script>
 
 <style scoped>
+.container-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
 .main-content {
   display: grid;
   grid-template-columns: 2fr 5fr;
@@ -71,7 +72,7 @@ const currentTab = computed(() => {
 .tabs-large-device {
   display: flex;
 }
-.tabs-wrapper,
+
 .tabs-small-device {
   display: none;
 }
@@ -96,19 +97,15 @@ const currentTab = computed(() => {
     display: none;
   }
 
-  .tabs-wrapper {
-    overflow-x: auto;
-  }
-
-  .tabs-wrapper,
   .tabs-small-device {
     display: flex;
     padding-top: 0;
   }
 
   .main-page {
-    width: 100%;
-    padding: 20px;
+    width: 100vw;
+    margin-right: 0;
+    padding: 12px;
   }
 }
 </style>

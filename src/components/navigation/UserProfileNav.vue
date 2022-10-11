@@ -1,80 +1,82 @@
 <template>
-  <section>
-    <div class="user-summary">
-      <div class="user-details">
-        <img
-          :src="userProfile?.avatarUrl"
-          :alt="userProfile?.name"
-          class="image-round-full"
-          title="Change your avatar"
-        />
+  <AppLoader :is-loading="isLoading">
+    <section>
+      <div class="user-summary">
+        <div class="user-details">
+          <img
+            :src="userProfile?.avatarUrl"
+            :alt="userProfile?.name"
+            class="image-round-full"
+            title="Change your avatar"
+          />
 
-        <div class="user-info">
-          <div class="fullname" v-text="userProfile?.name || 'Full Name'" />
-          <div class="username" v-text="userProfile?.login || 'Username'" />
+          <div class="user-info">
+            <div class="fullname" v-text="userProfile?.name || 'Full Name'" />
+            <div class="username" v-text="userProfile?.login || 'Username'" />
+          </div>
+        </div>
+
+        <div class="status-emoji" tabindex="0">
+          <IconEmoji />
+          <span class="status">Status</span>
         </div>
       </div>
 
-      <div class="status-emoji" tabindex="0">
-        <IconEmoji />
-        <span class="status">Status</span>
-      </div>
-    </div>
+      <div class="user-overview">
+        <div class="fullname" v-text="userProfile?.name" />
+        <div class="username" v-text="userProfile?.login" />
+        <p class="bio" v-html="userProfile?.bioHTML" />
+        <button>Edit profile</button>
 
-    <div class="user-overview">
-      <div class="fullname" v-text="userProfile?.name" />
-      <div class="username" v-text="userProfile?.login" />
-      <p class="bio" v-html="userProfile?.bioHTML" />
-      <button>Edit profile</button>
+        <div class="follow-group">
+          <div class="followers">
+            <IconPeople />
+            <span class="count" v-text="followersCount || 0" />
+            <span v-if="followersCount! > 1">followers</span>
+            <span v-else>follower</span>
+          </div>
 
-      <div class="follow-group">
-        <div class="followers">
-          <IconPeople />
-          <span class="count" v-text="followersCount || 0" />
-          <span v-if="followersCount! > 1">followers</span>
-          <span v-else>follower</span>
+          <span>&ensp;<b>&middot;</b>&ensp;</span>
+
+          <div class="following">
+            <span class="count" v-text="userProfile?.following?.totalCount || 0" />
+            <span>following</span>
+          </div>
         </div>
 
-        <span>&ensp;<b>&middot;</b>&ensp;</span>
+        <div class="icon-text company" v-if="userProfile?.company">
+          <IconBuilding />
+          <a
+            :href="`https://github.com/${userProfile?.company.slice(1)}`"
+            target="_blank"
+            rel="noopener noreferrer"
+            v-text="userProfile?.company"
+          />
+        </div>
 
-        <div class="following">
-          <span class="count" v-text="userProfile?.following?.totalCount || 0" />
-          <span>following</span>
+        <div class="icon-text" v-if="userProfile?.email">
+          <IconMail />
+          <a :href="`mailto:${userProfile?.email}`" v-html="userProfile?.email" />
+        </div>
+
+        <div class="icon-text" v-if="userProfile?.twitterUsername">
+          <IconTwitter />
+          <a
+            :href="`https://twitter.com/${userProfile?.twitterUsername}`"
+            target="_blank"
+            rel="noopener noreferrer"
+            v-text="`@${userProfile?.twitterUsername}`"
+          />
         </div>
       </div>
 
-      <div class="icon-text company" v-if="userProfile?.company">
-        <IconBuilding />
-        <a
-          :href="`https://github.com/${userProfile?.company.slice(1)}`"
-          target="_blank"
-          rel="noopener noreferrer"
-          v-text="userProfile?.company"
-        />
-      </div>
-
-      <div class="icon-text" v-if="userProfile?.email">
-        <IconMail />
-        <a :href="`mailto:${userProfile?.email}`" v-html="userProfile?.email" />
-      </div>
-
-      <div class="icon-text" v-if="userProfile?.twitterUsername">
-        <IconTwitter />
-        <a
-          :href="`https://twitter.com/${userProfile?.twitterUsername}`"
-          target="_blank"
-          rel="noopener noreferrer"
-          v-text="`@${userProfile?.twitterUsername}`"
-        />
-      </div>
-    </div>
-
-    <ItemGroup title="Organizations">
-      <div class="group organization-container">
-        <div class="organization-items"></div>
-      </div>
-    </ItemGroup>
-  </section>
+      <ItemGroup title="Organizations">
+        <div class="group organization-container">
+          <div class="organization-items"></div>
+        </div>
+      </ItemGroup>
+    </section>
+  </AppLoader>
 </template>
 
 <script setup lang="ts">
@@ -86,8 +88,10 @@ import ItemGroup from '@/components/card/ItemGroup.vue';
 import IconBuilding from '@/components/icons/IconBuilding.vue';
 import IconMail from '@/components/icons/IconMail.vue';
 import IconTwitter from '@/components/icons/IconTwitter.vue';
+import AppLoader from '@/components/AppLoader.vue';
 
 const store = useSharedStore();
+const isLoading = computed(() => store.isProfileLoading);
 const userProfile = computed(() => store.currentUser?.user);
 const followersCount = computed(() => userProfile.value?.followers?.totalCount);
 </script>

@@ -120,15 +120,16 @@ function getUser() {
 const username = computed(() => route.params.username);
 
 function fetchUserProfile(userLogin: string) {
-  const { variables, load, onResult, onError } = getUserProfile();
+  const { variables, load, loading, onResult, onError } = getUserProfile();
   variables.value = {
     username: userLogin,
   };
+
+  store.isProfileLoading = loading.value;
   load();
-  store.loading();
 
   onResult((queryResult: { data: UserProfileSummary }) => {
-    store.done();
+    store.isProfileLoading = loading.value;
     store.currentUser = queryResult.data;
 
     // console.log('queryResult.networkStatus: ', queryResult.networkStatus);

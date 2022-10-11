@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <AppLoader :is-loading="isLoading">
     <GithubSearchInput
       v-model="searchTerm"
       class="github-search-tab"
@@ -7,7 +7,7 @@
       title="Find a repository..."
     />
 
-    <p v-if="!store.isLoading && !repositories?.edges">No public repo found for this user.</p>
+    <p v-if="!isLoading && !repositories?.edges">No public repo found for this user.</p>
 
     <RepoSummary
       v-else
@@ -15,7 +15,7 @@
       :key="repo.node?.description"
       :repository-info="repo"
     />
-  </div>
+  </AppLoader>
 </template>
 
 <script setup lang="ts">
@@ -23,6 +23,7 @@ import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import RepoSummary from '@/components/card/RepoSummary.vue';
 import GithubSearchInput from '@/components/GithubSearchInput.vue';
+import AppLoader from '@/components/AppLoader.vue';
 import { getRepos } from '@/composables/useRepositoryFetch';
 import { useSharedStore } from '@/stores/shared';
 import type { RepositorySummary, UserRepositoriesSummary } from '@/types';
@@ -38,16 +39,19 @@ const filteredResult = computed(() =>
   )
 );
 
+const isLoading = computed(() => store.isRepoLoading);
+
 function fetchUserRepos(userLogin: string) {
-  const { variables, load, onResult, onError } = getRepos();
+  const { variables, load, loading, onResult, onError } = getRepos();
   variables.value = {
     username: userLogin,
   };
+
+  store.isRepoLoading = loading.value;
   load();
-  store.loading();
 
   onResult((queryResult: { data: UserRepositoriesSummary }) => {
-    store.done();
+    store.isRepoLoading = loading.value;
     repositories.value = queryResult?.data?.user?.repositories;
 
     // console.log('queryResult.networkStatus: ', queryResult.networkStatus);
