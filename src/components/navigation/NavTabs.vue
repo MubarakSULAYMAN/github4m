@@ -2,7 +2,7 @@
   <nav>
     <span class="empty-space">
       <div class="user-details" v-if="showItem">
-        <img :src="userProfile?.avatarUrl" :alt="userProfile?.name" class="image-round-full" />
+        <img :src="userProfile?.avatarUrl" :alt="userProfile?.name" class="rounded-full" />
         <div class="username" v-text="userProfile?.login" />
       </div>
     </span>

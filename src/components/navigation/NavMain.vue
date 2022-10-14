@@ -40,7 +40,7 @@
         </span>
 
         <span class="user-image">
-          <img :src="userProfile?.avatarUrl" :alt="userProfile?.name" class="image-round-full" />
+          <img :src="userProfile?.avatarUrl" :alt="userProfile?.name" class="rounded-full" />
           <IconCaretDown />
         </span>
       </div>

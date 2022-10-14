@@ -8,9 +8,9 @@
     </div>
 
     <div class="footer-navigation">
-      <RouterLink to="" class="foot-link" v-for="route in footerRoutes" :key="route.name">{{
-        route.name
-      }}</RouterLink>
+      <RouterLink to="" class="foot-link" v-for="route in footerRoutes" :key="route.name">
+        {{ route.name }}
+      </RouterLink>
     </div>
   </nav>
 </template>

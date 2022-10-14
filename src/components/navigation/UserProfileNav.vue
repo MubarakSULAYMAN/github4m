@@ -6,7 +6,7 @@
           <img
             :src="userProfile?.avatarUrl"
             :alt="userProfile?.name"
-            class="image-round-full"
+            class="rounded-full"
             title="Change your avatar"
           />
 

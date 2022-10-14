@@ -4,7 +4,7 @@
       <img
         :src="userInfo?.avatarUrl || 'https://source.unsplash.com/user/c_v_r'"
         :alt="userInfo?.name || userInfo?.login"
-        class="card-avatar image-round-full"
+        class="card-avatar rounded-full"
       />
 
       <div class="card-content">

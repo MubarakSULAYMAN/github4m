@@ -14,7 +14,7 @@
 
     <RouterLink to="" v-for="menu in mobileNavMenu" :key="menu.name">{{ menu.name }}</RouterLink>
     <RouterLink to="" class="user-image">
-      <img :src="userProfile?.avatarUrl" :alt="userProfile?.name" class="image-round-full" />
+      <img :src="userProfile?.avatarUrl" :alt="userProfile?.name" class="rounded-full" />
       <span>{{ username }}</span>
     </RouterLink>
     <RouterLink to="" class="signout">

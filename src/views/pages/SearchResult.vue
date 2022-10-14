@@ -63,18 +63,18 @@ const storeSearch = useUserSearchStore();
 const isLoading = computed(() => store.isLoading);
 const queryTerm = computed(() => route.query.q);
 
-const usersCount = computed(() => storeSearch.users?.search.userCount || 12345667890);
+const usersCount = computed(() => storeSearch.users?.search.userCount || 0);
 const users = computed(() =>
   storeSearch.users?.search.edges?.filter((user) => user?.node.__typename === 'User')
 );
 
 function getUser() {
-  storeSearch.fetchUsers(String(queryTerm.value));
+  storeSearch.fetchUsers(String(store.searchTerm || queryTerm.value));
 
   router.replace({
     name: 'search-result',
     query: {
-      q: queryTerm.value,
+      q: store.searchTerm || queryTerm.value,
       type: 'users',
     },
   });
