@@ -7,7 +7,9 @@
       title="Find a repository..."
     />
 
-    <p v-if="!isLoading && !repositories?.edges">No public repo found for this user.</p>
+    <p v-if="!isLoading && !repositories?.edges">
+      {{ userProfile?.login }} doesn’t have any public repositories yet...
+    </p>
 
     <RepoSummary
       v-else
@@ -38,6 +40,7 @@ const filteredResult = computed(() =>
     repo.node.name.toLowerCase().includes(searchTerm.value.toLowerCase())
   )
 );
+const userProfile = computed(() => store.currentUser?.user);
 
 const isLoading = computed(() => store.isRepoLoading);
 

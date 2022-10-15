@@ -24,7 +24,7 @@ img {
   background-color: var(--vt-c-black-hard);
 }
 
-.image-round-full {
+.rounded-full {
   border-radius: 50%;
 }
 

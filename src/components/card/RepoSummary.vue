@@ -10,7 +10,7 @@
             class="name"
             v-text="repo.name"
           />
-          <span class="category" v-if="!repo.isPrivate">Public</span>
+          <i class="category" v-if="!repo.isPrivate">Public</i>
         </div>
 
         <p class="repo-origin" v-if="repo.parent">
